@@ -1,5 +1,7 @@
 report: 'reports/report.rst'
 
+configfile: 'config/config.yaml'
+
 include: 'rules/common.smk'
 include: 'rules/normalize.smk'
 include: 'rules/diagnostics.smk'
