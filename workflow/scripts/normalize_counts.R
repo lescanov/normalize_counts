@@ -94,15 +94,17 @@ clinical <- clinical %>%
   filter(duplicated(!!sym(id_column)) == FALSE)
 shared_samples <- intersect(clinical[[id_column]], colnames(raw_counts))
 
-if (length(test) < 1) {
+if (length(shared_samples) < 1) {
   stop("There are no overlapping samples between clinical and raw counts")
 }
 
 clinical <- clinical %>%
   filter(!!sym(id_column) %in% shared_samples)
 
+# Must make sure there are no duplicate gene IDs
 raw_counts <- raw_counts %>%
   select(!!sym(gene_column), all_of(shared_samples)) %>%
+  filter(duplicated(!!sym(gene_column)) == FALSE) %>%
   column_to_rownames(var = gene_column)
 
 # Now preparing and normalizing counts

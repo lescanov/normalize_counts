@@ -4,7 +4,7 @@ rule normalize_counts:
 		raw_counts=config['raw_counts'],
 		clinical=config['clinical']
 	params:
-		gene_column='ensembl_id',
+		gene_column='gene_id',
 		id_column='patient_id',
 		is_batch_corrected=False,
 		batch_column=None,

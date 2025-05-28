@@ -5,7 +5,7 @@ rule plot_pca:
 	params:
 		is_plotting_grouping=True,
 		grouping_column='subtype',
-		gene_column='ensembl_id',
+		gene_column='gene_id',
 		id_column='patient_id'
 	output:
 		plot='results/pca.pdf'

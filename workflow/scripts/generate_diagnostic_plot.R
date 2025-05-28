@@ -30,7 +30,7 @@ plot_outpath <- snakemake@output[["plot"]]
 
 stopifnot(
   is.logical(is_plotting_grouping),
-  gene_column %in% normalized_counts
+  gene_column %in% colnames(normalized_counts)
 )
 
 # Formatting normalized counts
@@ -39,7 +39,7 @@ counts <- normalized_counts %>%
   column_to_rownames(var = gene_column) %>%
   t()
 
-pca_counts <- prcomp(counts, scale = TRUE) %>%
+pca_counts <- prcomp(counts, scale = TRUE)[["x"]] %>%
   as.data.frame() %>%
   select(PC1, PC2) %>%
   rownames_to_column(var = id_column)
@@ -51,14 +51,14 @@ if (is_plotting_grouping == TRUE) {
     filter(duplicated(!!sym(id_column)) == FALSE) %>%
     filter(!!sym(id_column) %in% colnames(normalized_counts)) %>%
     arrange(match(!!sym(id_column), colnames(normalized_counts))) %>%
-    select(id_column, grouping_column)
+    select(all_of(id_column), all_of(grouping_column))
 
   pca_counts <- pca_counts %>%
     inner_join(clinical, by = id_column)
 
   pca_plot <- ggplot(
     pca_counts,
-    aes(x = PC1, y = PC2, colour = grouping_column)
+    aes(x = PC1, y = PC2, colour = !!sym(grouping_column))
   ) +
     geom_point()
 
@@ -70,4 +70,4 @@ if (is_plotting_grouping == TRUE) {
     geom_point()
 }
 
-ggsave(pca_plot, plot_outpath)
+ggsave(pca_plot, filename = plot_outpath)
