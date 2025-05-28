@@ -1,0 +1,9 @@
+report: 'reports/report.rst'
+
+include: 'rules/common.smk'
+include: 'rules/normalize.smk'
+include: 'rules/diagnostics.smk'
+
+rule all:
+	input:
+		get_final_output()
