@@ -1,0 +1,2 @@
+raw_counts: 'resources/example_rna_counts.csv'
+clinical: 'resources/example_summary.csv'
