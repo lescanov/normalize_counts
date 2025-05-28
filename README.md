@@ -1,3 +1,5 @@
+# bulkRawToNorm pipeline
+
 ## Purpose:
 To normalize bulk gene based miRNA and RNA sequencing counts for downstream statistical and visual analysis, with cancer datasets specifically in mind.
 
