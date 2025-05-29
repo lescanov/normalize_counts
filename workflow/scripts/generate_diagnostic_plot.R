@@ -53,6 +53,10 @@ if (is_plotting_grouping == TRUE) {
     arrange(match(!!sym(id_column), colnames(normalized_counts))) %>%
     select(all_of(id_column), all_of(grouping_column))
 
+  # In case grouping factor is a numeric value, this will allow it to
+  # show as discrete groupings instead of a gradient on the plot
+  clinical[[grouping_column]] <- as.factor(clinical[[grouping_column]])
+
   pca_counts <- pca_counts %>%
     inner_join(clinical, by = id_column)
 
